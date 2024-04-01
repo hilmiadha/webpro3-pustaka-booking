@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-sm-3 col-md-3">
                 <div class="thumbnail" style="height: auto; position: relative; left: 100%; width: 200%;">
-                    <img src="<?php echo base_url(); ?>assets/img/upload/<?= $gambar; ?>" style="maxwidth:100%; max-height: 100%; height: 150px; width: 120px">
+                    <img src="<?php echo base_url(); ?>assets/img/upload/<?= $gambar; ?>" style="max-width:100%; max-height: 100%; height: 150px; width: 120px">
                     <div class="caption">
                     <h5 style="min-height:40px;" align="center"><?= $pengarang ?></h5>
                     <center>
