@@ -18,6 +18,7 @@ class Pinjam extends CI_Controller
         $this->load->view('pinjam/data-pinjam', $data);
         $this->load->view('templates/footer');
     }
+
     public function daftarBooking()
     {
         $data['judul'] = "Daftar Booking";

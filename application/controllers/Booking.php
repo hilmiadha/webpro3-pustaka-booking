@@ -41,7 +41,7 @@ tahun_terbit,id_buku from temp where id_user='$id_user'")->result_array();
     public function tambahBooking()
     {
         $id_buku = $this->uri->segment(3);
-        //memilih data buku yang untuk dimasukkan ke tabel temp/keranjang melalui variabel $isi
+        //memilih data buku yang untuk dimasukkan ke tabel temp/keranjang melalui variabel
         $d = $this->db->query("Select*from buku where id='$id_buku'")->row();
         //berupa data2 yang akan disimpan ke dalam tabel temp/keranjang
         $isi = [
@@ -139,23 +139,29 @@ where d.id_booking=bo.id_booking and d.id_buku=bu.id and bo.id_user='$where'")->
         $data['user'] = $this->session->userdata('nama');
         $data['judul'] = "Cetak Bukti Booking";
         $data['useraktif'] = $this->ModelUser->cekData(['id' => $this->session->userdata('id_user')])->result();
-        $data['items'] = $this->db->query("select*from booking bo, booking_detail d, 
-buku bu where d.id_booking=bo.id_booking and d.id_buku=bu.id and 
-bo.id_user='$id_user'")->result_array();
-        // script untuk dompdf php versi 7.1.0 keatas
-        $sroot = $_SERVER['DOCUMENT_ROOT'];
-        include $sroot . "/pustaka-booking/application/third_party/dompdf/autoload.inc.php";
-        $dompdf = new Dompdf\Dompdf();
-        $this->load->view('booking/bukti-pdf', $data);
-        $paper_size = 'A4'; // ukuran kertas
-        $orientation = 'landscape'; //tipe format kertas potrait atau landscape
-        $html = $this->output->get_output();
-        $dompdf->set_paper($paper_size, $orientation);
-        // Convert to PDF
-        $dompdf->load_html($html);
-        $dompdf->render();
-        $dompdf->stream("bukti-booking-$id_user.pdf", array('Attachment' => 0));
-        // nama file pdf yang di hasilkan
+        $data1 = $this->db->query("select*from booking bo, booking_detail d, buku bu where 
+d.id_booking=bo.id_booking and d.id_buku=bu.id and bo.id_user='$id_user'")->num_rows();
+        if ($data1 < 1) {
+            $this->session->set_flashdata('pesan', '<div class="alert alert-massege alert-danger" 
+role="alert">Tidak Ada Data Booking, Silahkan Lakukan Booking Terlebih Dahulu</div>');
+            redirect(base_url());
+        } else {
+            $data['items'] = $this->db->query("select*from booking bo, booking_detail d, buku bu 
+where d.id_booking=bo.id_booking and d.id_buku=bu.id and bo.id_user='$id_user'")->result_array();
 
+            $sroot = $_SERVER['DOCUMENT_ROOT'];
+            include $sroot . "/pustaka-booking/application/third_party/dompdf/autoload.inc.php";
+            $dompdf = new Dompdf\Dompdf();
+            $this->load->view('booking/bukti-pdf', $data);
+            $paper_size = 'A4'; // ukuran kertas
+            $orientation = 'landscape'; //tipe format kertas potrait atau landscape
+            $html = $this->output->get_output();
+            $this->dompdf->set_paper($paper_size, $orientation);
+            // Convert to PDF
+            $this->dompdf->load_html($html);
+            $this->dompdf->render();
+            $this->dompdf->stream("bukti-booking-$id_user.pdf", array('Attachment' => 0));
+            // nama file pdf yang di hasilkan
+        }
     }
 }
