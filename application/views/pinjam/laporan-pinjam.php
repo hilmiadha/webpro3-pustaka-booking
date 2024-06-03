@@ -10,8 +10,8 @@
             <?php } ?>
             <?= $this->session->flashdata('pesan'); ?>
             <a href="<?= base_url('laporan/cetak_laporan_pinjam'); ?>" target="_blank" class="btn btnprimary mb-3"><i class="fas fa-print"></i> </a>
-            <a href="<?= base_url('laporan/laporan_pinjam_pdf'); ?>" target="_blank" class="btn btnwarning mb-3"><i class="far fa-file-pdf"></i> </a>
-            <a href="<?= base_url('laporan/export_excel_pinjam'); ?>" target="_blank" class="btn btnsuccess mb-3"><i class="far fa-file-excel"></i> </a>
+            <a href="<?= base_url('laporan/laporan_pinjam_pdf'); ?>" class="btn btn-warning mb-3"><i class="far fa-file-pdf"></i> </a>
+            <a href="<?= base_url('laporan/export_excel_pinjam'); ?>" class="btn btn-success mb-3"><i class="far fa-file-excel"></i> </a>
             <table class="table table-hover">
                 <thead>
                     <tr>
